@@ -1,8 +1,9 @@
 import React from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faCartPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../actions/userActions.js";
 
 // Route
 import { LinkContainer } from "react-router-bootstrap";
@@ -13,17 +14,22 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  // const logoutHandler = () => {
-  //   dispatch(logout());
-  // };
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
 
   return (
     <header>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="primary" expand="lg" style={{ color: "white" }}>
         <Container style={{ width: "85%" }}>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <h3>Neme</h3>
+              {/* <h3>Nemesis Consultants</h3> */}
+              <img
+                src="./images/Nemesis_logo.png"
+                alt=""
+                style={{ width: "50%" }}
+              />
             </Navbar.Brand>
           </LinkContainer>
 
@@ -36,6 +42,7 @@ const Header = () => {
                     className="nav-icon"
                     icon={faHome}
                     size="2x"
+                    color="white"
                   />
                   <h5 className="nav-link-name">Home</h5>
                 </Nav.Link>
@@ -43,16 +50,18 @@ const Header = () => {
 
               {userInfo ? (
                 <NavDropdown
-                  style={{ paddingLeft: "1rem", fontSize: "1.4rem" }}
+                  style={{
+                    paddingLeft: "1rem",
+                    fontSize: "1.4rem",
+                    color: "white",
+                  }}
                   title={userInfo.name}
                   id="username"
                 >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item> Profile</NavDropdown.Item>
                   </LinkContainer>
-                  <NavDropdown.Item
-                  // onClick={logoutHandler}
-                  >
+                  <NavDropdown.Item onClick={logoutHandler}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
@@ -63,6 +72,7 @@ const Header = () => {
                       className="nav-icon"
                       icon={faUser}
                       size="2x"
+                      color="white"
                     />
                     <h5 className="nav-link-name">Sign In</h5>
                   </Nav.Link>

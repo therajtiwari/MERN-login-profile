@@ -3,6 +3,8 @@ import React from "react";
 // components
 import Header from "./components/Header";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 import { Container } from "react-bootstrap";
 
@@ -19,7 +21,8 @@ function App() {
       <main>
         <Container fluid className="text-center py-5">
           <Route path="/login" component={LoginScreen} />
-          {/* <Route path="/" component={HomeScreen} exact /> */}
+          <Route path="/register" component={RegisterScreen} />
+          <Route path="/" component={HomeScreen} exact />
         </Container>
       </main>
     </Router>
