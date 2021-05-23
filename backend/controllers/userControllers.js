@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      address: user.address,
       token: generateToken(user._id),
     });
   } else {
@@ -37,6 +38,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      address: user.address,
     });
   } else {
     res.status(404);
@@ -84,4 +86,38 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid Data");
   }
 });
-export { authUser, getUserProfile, registerUser };
+
+//  @desc   update the profile of user
+//  @route  PUT api/users/profile
+//  @access private
+const updateUserProfile = asyncHandler(async (req, res) => {
+  // console.log(req);
+  const user = await User.findById(req.user._id);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    user.address = req.body.address || "";
+
+    try {
+      const updatedUser = await user.save();
+      console.log(updatedUser);
+      res.json({
+        id: user._id,
+        username: updatedUser.username,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        address: updatedUser.address,
+        token: generateToken(updatedUser._id),
+      });
+    } catch (error) {
+      throw new Error("Username/ Email is already taken");
+    }
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+export { authUser, getUserProfile, registerUser, updateUserProfile };

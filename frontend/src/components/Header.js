@@ -4,18 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions.js";
+import { useHistory } from "react-router-dom";
 
 // Route
 import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  let { userInfo } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
+    history.push("/login");
   };
 
   return (
